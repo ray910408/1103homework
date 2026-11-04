@@ -1,0 +1,35 @@
+/* SSRF 專屬樣式；共用樣式在 src/styles/global.css */
+
+/* 第 3 段：三欄對照 */
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; align-items: start; }
+@media (max-width: 1000px) { .grid3 { grid-template-columns: 1fr; } }
+
+/* 拓撲圖 */
+.firewall { fill: var(--c-comment); }
+.zone { fill: none; stroke: var(--c-muted); stroke-width: 1.5; stroke-dasharray: 6 5; }
+.zoneLabel { font-size: 13px; font-weight: 700; fill: var(--c-muted); }
+.blockX { font-size: 22px; font-weight: 700; fill: var(--c-safe); }
+.hopDot { fill: var(--c-text); }
+.hopNo { font-size: 12px; font-weight: 700; fill: #fff; }
+.note { font-size: 13px; font-weight: 600; fill: var(--c-text); }
+
+/* 伺服器內部：請求追蹤 */
+.trace { margin: 0; padding-left: 1.3rem; font-size: .9rem; display: flex; flex-direction: column; gap: .2rem; overflow-wrap: anywhere; }
+.trace .info { color: var(--c-muted); }
+.trace .attack { color: var(--c-attack); }
+.trace .safe { color: var(--c-safe); }
+.trace .leak { color: var(--c-leak); font-weight: 600; }
+
+/* 伺服器抓回來的內容 */
+.fetched {
+  margin: .75rem 0 0; padding: .7rem .9rem; border-radius: 8px;
+  background: var(--c-bg); border: 1px solid var(--c-border);
+  font-size: .85rem; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 16rem; overflow: auto;
+}
+.fetchedLeak { background: var(--c-leak-bg); border-color: var(--c-leak); color: var(--c-leak); }
+.image { margin-top: .75rem; display: flex; align-items: center; gap: .75rem; padding: .7rem .9rem; border: 1px solid var(--c-border); border-radius: 8px; }
+.image .cat { font-size: 3rem; line-height: 1; }
+
+/* 「字串 vs 實際連線」小字 */
+.target { font-size: .85rem; margin: .5rem 0 0; color: var(--c-muted); overflow-wrap: anywhere; }
+.target b { color: var(--c-text); }

@@ -12,9 +12,9 @@
 | 主題 | 狀態 |
 |---|---|
 | SQL Injection（SQL 注入） | ✅ 完成 |
-| XSS（跨站腳本攻擊） | 🚧 製作中 |
-| SSRF（伺服器端請求偽造） | 🚧 製作中 |
-| CSRF（跨站請求偽造） | 🚧 製作中 |
+| XSS（跨站腳本攻擊）：Reflected / Stored / DOM-based | ✅ 完成 |
+| SSRF（伺服器端請求偽造） | ✅ 完成 |
+| CSRF（跨站請求偽造） | ✅ 完成 |
 | Command Injection（命令注入） | 🚧 製作中 |
 
 ## 每個主題的 4 段結構
@@ -53,7 +53,7 @@ npm run preview    # 預覽 build 結果
 src/
   App.tsx, Home.tsx      版型、首頁、路由
   topics.ts              主題清單
-  components/ui.tsx      共用元件（段落、名詞解釋）
+  components/ui.tsx      共用元件（段落、假網站外框、結果框、挑戰卡、輸入上色…）
   styles/global.css      全站樣式與色彩語意變數
   modules/<topic>/
     index.tsx            模組頁面

@@ -1,5 +1,6 @@
 // SQL Injection 模擬引擎：純 TS，不依賴 React，方便測試。
 import type { Database, SqlJsStatic, SqlValue } from 'sql.js'
+import type { SegKind, Segment } from '../../components/ui.tsx'
 
 export interface User { id: number; username: string; password: string; role: string }
 
@@ -65,14 +66,6 @@ export function login(SQL: SqlJsStatic, username: string, password: string, mode
 
 // ---------- 視覺化：標出每個字元在 SQL 裡扮演的角色 ----------
 
-/**
- * code     = 程式設計師寫的 SQL
- * data     = 你的輸入，乖乖待在字串引號裡（只是資料）
- * injected = 你的輸入跳出了引號，變成 SQL 指令
- * comment  = 被註解掉、不會執行的部分
- */
-export type SegKind = 'code' | 'data' | 'injected' | 'comment'
-export interface Segment { text: string; kind: SegKind }
 
 interface Tok {
   kind: 'string' | 'comment' | 'word' | 'other'

@@ -31,8 +31,8 @@ npm run lint
 ```
 src/
   main.tsx / App.tsx     HashRouter、首頁、模組路由
-  components/            跨模組共用元件（至少 2 個模組用到才抽出來）
-  styles/global.css      色彩語意變數
+  components/ui.tsx      跨模組共用元件（至少 2 個模組用到才抽出來）
+  styles/global.css      色彩語意變數 + 共用元件樣式
   modules/<topic>/       topic = sqli | xss | ssrf | csrf | cmdi
     index.tsx            模組頁面
     engine.ts            模擬邏輯：純 TS 函式，不依賴 React
@@ -55,8 +55,16 @@ src/
 
 顏色不能是唯一的訊號：同時加 icon 或文字標籤。
 
+### 共用元件（`src/components/ui.tsx`，新模組先用這些，不要自己再做一份）
+- 版面：`Section`、`Term`（名詞解釋）、`FakeSite`（有網址列的假網站外框）
+- 輸入：`TextField`、`Presets`（快速填入範例）
+- 結果：`ResultBox` 的 tone：攻擊成功 = `attack`（紅）、資料外洩 = `leak`（黃）、修補版擋下 = `ok`（綠）、一般失敗 = `fail`（灰）
+- 說明：`Insights`（💡 發生了什麼事）、`SegmentView` + `SegmentLegend`（把 SQL / HTML / shell 指令依 code / data / injected / comment 上色）
+- 挑戰：`ChallengeCard`（hints 最後一項是解答）
+- 圖解：`<svg className="diagram">`，搭配 global.css 的 `box-*`、`arrow-*`、`label-*`、`dash`。箭頭定義 `<DiagramDefs />` 已在 App.tsx 全站放一份，模組不要再放（id 會重複）
+
 ## 各模組模擬方式
-- **SQLi**：`sql.js` 建假的 `users` 表。漏洞版用字串拼接，視覺化標出輸入在 SQL 中的邊界（哪一段從「資料」變成了「指令」）；修補版用 `prepare` + `bind`。WASM 要用 `import wasmUrl from 'sql.js/dist/sql-wasm.wasm?url'` 搭配 `initSqlJs({ locateFile: () => wasmUrl })`，部署後路徑才會正確。
+- **SQLi**：`sql.js` 建假的 `users` 表。漏洞版用字串拼接，視覺化標出輸入在 SQL 中的邊界（哪一段從「資料」變成了「指令」）；修補版用 `prepare` + `bind`。WASM 要用 `import wasmUrl from 'sql.js/dist/sql-wasm-browser.wasm?url'`（瀏覽器會載入 `sql-wasm-browser.js`，兩者要成對） 搭配 `initSqlJs({ locateFile: () => wasmUrl })`，部署後路徑才會正確。
 - **XSS**（Reflected / Stored / DOM-based）：payload 只在 `<iframe sandbox="allow-scripts" srcdoc=...>` 裡執行，**絕不加 `allow-same-origin`**。「偷 cookie」用 `postMessage` 傳回父頁（父頁要驗證 `event.source === iframe.contentWindow`），再畫成動畫。修補版示範 escape、`textContent`、CSP（CSP 寫在 srcdoc 內的 `<meta http-equiv>`）。
 - **SSRF**：網路拓撲圖（攻擊者 → Web Server → 內網：`169.254.169.254` metadata、`localhost` admin 後台、內部 DB）。`serverFetch(url)` 用 `new URL()` 解析，再查記憶體裡的假 DNS / 假服務表。`new URL()` 會把 `2130706433`、`0x7f.1` 正規化成 `127.0.0.1`，正好拿來示範「字串黑名單為什麼擋不住」。修補版：allowlist + 解析後擋 private / loopback / link-local 位址。
 - **CSRF**：同一頁並排兩個假網站 `bank.test` 與 `evil.test`，用假的 cookie jar 視覺化「瀏覽器會自動帶上 cookie」。修補版：CSRF token、`SameSite=Lax`。
@@ -88,5 +96,6 @@ src/
 1. ✅ Scaffold：`npm create vite@latest . -- --template react-ts`。資料夾非空時選「Ignore files and continue」，**不要選 Remove existing files**（會刪掉這份 CLAUDE.md）。接著加 `react-router`、`sql.js`、`vitest`，在 `package.json` 加 `"test": "vitest run"`，然後 `git init`。
 2. ✅ 首頁 + 共用版型 + 色彩變數
 3. ✅ **SQLi 先做完，當範本模組**：確立 4 段結構後，其他模組照抄結構
-4. XSS → SSRF → CSRF → Command Injection
+4. ✅ XSS、SSRF、CSRF（各自 fork 子代理平行開發，主對話整合 + 瀏覽器 QA）
+   - ⏸ Command Injection：子代理產生內容時被安全檢查攔下，目前只保留在 topics.ts（`ready: false`），沒有模組資料夾與路由。
 5. ✅ GitHub Pages 部署（CI/CD）

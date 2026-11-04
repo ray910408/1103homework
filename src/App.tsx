@@ -1,7 +1,11 @@
 import { useEffect } from 'react'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router'
+import { DiagramDefs } from './components/ui.tsx'
 import Home from './Home.tsx'
+import CsrfPage from './modules/csrf/index.tsx'
 import SqliPage from './modules/sqli/index.tsx'
+import SsrfPage from './modules/ssrf/index.tsx'
+import XssPage from './modules/xss/index.tsx'
 import { TOPICS } from './topics.ts'
 
 export default function App() {
@@ -11,6 +15,8 @@ export default function App() {
 
   return (
     <>
+      {/* 全站共用的 SVG 箭頭定義，只放一份，避免 id 重複 */}
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true"><DiagramDefs /></svg>
       <header className="site-header">
         <nav aria-label="主選單">
           <Link to="/" className="brand">🛡️ 資安攻擊互動圖解</Link>
@@ -25,6 +31,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sqli" element={<SqliPage />} />
+          <Route path="/xss" element={<XssPage />} />
+          <Route path="/ssrf" element={<SsrfPage />} />
+          <Route path="/csrf" element={<CsrfPage />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

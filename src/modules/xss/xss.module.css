@@ -1,0 +1,37 @@
+/* XSS 專屬樣式；共用樣式在 src/styles/global.css */
+
+.tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
+.tabs button[aria-pressed="true"], .viewers button[aria-pressed="true"] {
+  background: var(--c-code); border-color: var(--c-code); color: #fff;
+}
+
+/* 輸入框 + 送出按鈕同一列 */
+.row { display: grid; grid-template-columns: 1fr auto; gap: .5rem; align-items: end; }
+
+.viewers { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-top: .75rem; font-size: .9rem; }
+
+/* 受害者頁面（sandbox iframe） */
+.frame { display: block; width: 100%; margin-top: .9rem; border: 1px solid var(--c-border); border-radius: 8px; background: #fff; }
+
+/* 假的 alert 彈窗 */
+.alert {
+  margin-top: .6rem; max-width: 24rem; padding: .6rem .8rem;
+  background: var(--c-card); border: 1px solid var(--c-border); border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
+}
+.alert span { display: block; font-size: .8rem; color: var(--c-muted); }
+.alert strong { color: var(--c-attack); overflow-wrap: anywhere; }
+.err { margin-top: .5rem; font-size: .85rem; color: var(--c-muted); overflow-wrap: anywhere; }
+
+/* 簡化 DOM 樹 */
+.tree, .tree ul { list-style: none; margin: 0; font-family: var(--mono); font-size: .85rem; line-height: 1.9; }
+.tree { padding-left: 0; }
+.tree ul { padding-left: 1.1rem; border-left: 1px dashed var(--c-border); }
+.node { color: var(--c-code); padding: 0 .25rem; border-radius: 4px; overflow-wrap: anywhere; }
+.node.injected { background: var(--c-attack); color: #fff; font-weight: 700; }
+.handler { text-decoration: underline wavy; text-underline-offset: 3px; }
+.text { color: var(--c-muted); overflow-wrap: anywhere; }
+.text.injected { color: var(--c-attack); outline: 1.5px dashed var(--c-attack); outline-offset: 1px; border-radius: 3px; }
+.inert { margin-left: .4rem; font-family: var(--font); font-size: .78rem; color: var(--c-safe); font-weight: 600; }
+
+.check { display: flex; gap: .5rem; align-items: center; margin: .5rem 0; color: var(--c-text); font-size: .95rem; }
