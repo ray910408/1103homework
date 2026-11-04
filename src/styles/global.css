@@ -101,7 +101,7 @@ input[type="text"]:focus { border-color: var(--c-code); }
 .term { border-bottom: 1px dashed var(--c-code); cursor: help; position: relative; }
 .term .tip {
   display: none; position: absolute; left: 0; top: 1.8em; z-index: 5;
-  width: max-content; max-width: 18rem;
+  width: max-content; max-width: min(18rem, calc(100vw - 16px));
   background: var(--c-text); color: #fff; font-size: .85rem; line-height: 1.5;
   padding: .45rem .6rem; border-radius: 6px; font-weight: 400;
 }

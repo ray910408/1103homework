@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 
 // ---------- 型別 ----------
 
@@ -36,12 +36,26 @@ export function Section({ no, title, lead, children }: {
   )
 }
 
-/** 專有名詞＋白話解釋。滑鼠移上去或 Tab 到它都會顯示 */
+/** 專有名詞＋白話解釋。滑鼠移上去、Tab 到它、手機點它都會顯示 */
 export function Term({ children, tip }: { children: string; tip: string }) {
+  const tipRef = useRef<HTMLSpanElement>(null)
+
+  // tooltip 從名詞左邊往右展開；名詞靠近螢幕右邊時會超出去，量一下再往內推
+  const fit = () => {
+    const el = tipRef.current
+    if (!el) return
+    el.style.transform = ''
+    const r = el.getBoundingClientRect()
+    const margin = 8
+    const vw = document.documentElement.clientWidth
+    const shift = r.right > vw - margin ? vw - margin - r.right : r.left < margin ? margin - r.left : 0
+    if (shift) el.style.transform = `translateX(${shift}px)`
+  }
+
   return (
-    <span className="term" tabIndex={0} aria-label={`${children}：${tip}`}>
+    <span className="term" tabIndex={0} aria-label={`${children}：${tip}`} onMouseEnter={fit} onFocus={fit}>
       {children}
-      <span className="tip" role="tooltip">{tip}</span>
+      <span ref={tipRef} className="tip" role="tooltip">{tip}</span>
     </span>
   )
 }
