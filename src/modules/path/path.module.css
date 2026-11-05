@@ -1,0 +1,30 @@
+/* Path Traversal 專屬樣式；共用樣式在 src/styles/global.css */
+
+/* 目錄樹 */
+.treeLine { fill: none; stroke: var(--c-border); stroke-width: 1.5; }
+.name { font-family: var(--mono); font-size: 13px; fill: var(--c-text); }
+.zone { fill: none; stroke: var(--c-safe); stroke-width: 1.5; stroke-dasharray: 6 5; }
+.zoneLabel { font-size: 13px; font-weight: 700; fill: var(--c-safe); }
+.hopDot { fill: var(--c-text); }
+.hopNo { font-size: 11px; font-weight: 700; fill: #fff; }
+.status { font-size: 13px; fill: var(--c-text); font-family: var(--mono); }
+.statusBad { font-size: 14px; font-weight: 700; fill: var(--c-attack); }
+.statusOk { font-size: 14px; font-weight: 700; fill: var(--c-safe); }
+
+/* 伺服器內部：每一步 */
+.trace { margin: 0; padding-left: 1.3rem; font-size: .9rem; display: flex; flex-direction: column; gap: .2rem; overflow-wrap: anywhere; }
+.trace .info { color: var(--c-muted); }
+.trace .attack { color: var(--c-attack); }
+.trace .leak { color: var(--c-leak); font-weight: 600; }
+.trace .safe { color: var(--c-safe); }
+
+/* 下載到的檔案內容 */
+.fetched {
+  margin: .75rem 0 0; padding: .7rem .9rem; border-radius: 8px;
+  background: var(--c-bg); border: 1px solid var(--c-border);
+  font-size: .85rem; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 16rem; overflow: auto;
+}
+.fetchedLeak { background: var(--c-leak-bg); border-color: var(--c-leak); color: var(--c-leak); }
+
+.target { font-size: .85rem; margin: .5rem 0 0; color: var(--c-muted); overflow-wrap: anywhere; }
+.target b { color: var(--c-text); font-family: var(--mono); }

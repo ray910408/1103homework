@@ -23,6 +23,7 @@ export default function Home() {
           const body = (
             <>
               <span className={`badge ${t.ready ? 'code' : ''}`}>{t.ready ? '可以玩了' : '製作中'}</span>
+              <span className="owasp">OWASP {t.owasp}</span>
               <h3>{t.title}</h3>
               <p><strong>{t.zh}</strong>｜{t.summary}</p>
             </>

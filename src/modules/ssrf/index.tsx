@@ -1,6 +1,6 @@
 import { useId, useMemo, useState, type ReactNode } from 'react'
 import {
-  ChallengeCard, FakeSite, Insights, Presets, ResultBox, Section, Term, TextField,
+  ChallengeCard, OwaspLine, FakeSite, Insights, Presets, ResultBox, Section, Term, TextField,
 } from '../../components/ui.tsx'
 import {
   FLAG_ADMIN, FLAG_METADATA, INTERNAL, privateRange, serverFetch, type FetchResult, type Mode, type NodeId,
@@ -313,6 +313,7 @@ export default function SsrfPage() {
   return (
     <>
       <h1>SSRF（伺服器端請求偽造）</h1>
+      <OwaspLine category="A01 Broken Access Control（存取控制失效）" cwe="CWE-918" />
 
       <Section no={1} title="情境：一個會「幫你抓網址」的圖床">
         <p>
@@ -373,7 +374,7 @@ export default function SsrfPage() {
       </Section>
 
       <Section no={3} title="修補：同一個網址，三種寫法" lead="下面沿用第 2 段的網址。中間的黑名單版「看起來修了」，試試 2130706433 或 302 轉址，看它怎麼被繞過。">
-        <div className={s.grid3}>
+        <div className="grid-3">
           <ModeCard mode="vulnerable" url={url} />
           <ModeCard mode="blacklist" url={url} />
           <ModeCard mode="patched" url={url} />

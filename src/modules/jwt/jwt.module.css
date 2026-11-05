@@ -1,0 +1,25 @@
+/* JWT 專屬樣式；共用樣式在 src/styles/global.css */
+
+/* 選擇要攻擊哪台伺服器 */
+.modes { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-bottom: 1rem; font-size: .9rem; }
+.modes button[aria-pressed="true"] { background: var(--c-code); border-color: var(--c-code); color: #fff; }
+
+/* JWT 編輯器 */
+.area {
+  width: 100%; font-size: .9rem; line-height: 1.5; padding: .5rem .6rem;
+  border: 1px solid var(--c-border); border-radius: 8px; resize: vertical;
+}
+.area:focus { border-color: var(--c-code); }
+
+/* token 三段 */
+.token { margin-top: .75rem; }
+.token td { line-height: 1.9; }
+.token th small { display: block; font-weight: 400; font-size: .78rem; color: var(--c-muted); }
+.changed { margin-left: .4rem; font-family: var(--font); font-size: .78rem; font-weight: 700; color: var(--c-attack); white-space: nowrap; }
+
+/* 驗證步驟圖：右邊的狀態文字 */
+.stPass, .stFail, .stUnsafe, .stIdle { font-size: 13px; }
+.stPass { fill: var(--c-code); }
+.stFail { fill: var(--c-safe); font-weight: 700; }
+.stUnsafe { fill: var(--c-attack); font-weight: 700; }
+.stIdle { fill: var(--c-comment); }

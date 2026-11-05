@@ -1,0 +1,23 @@
+/* Brute Force 專屬樣式；共用樣式在 src/styles/global.css */
+
+/* 字典：一排密碼小標籤 */
+.words { display: flex; flex-wrap: wrap; gap: .3rem; margin: .3rem 0 .8rem; }
+.words code { font-size: .82rem; }
+
+/* 下拉選單、數字輸入：比照 global.css 的文字輸入框 */
+.control {
+  width: 100%; font: inherit; font-size: 1rem; padding: .45rem .6rem;
+  border: 1px solid var(--c-border); border-radius: 8px; background: var(--c-card); color: var(--c-text);
+}
+.control:focus { border-color: var(--c-code); }
+
+/* 嘗試紀錄：太長就捲動 */
+.timeline { max-height: 20rem; overflow: auto; margin-top: .5rem; border-radius: 8px; }
+.timeline td { white-space: nowrap; }
+.timeline td:last-child { white-space: normal; }
+.fail td:last-child { color: var(--c-muted); }
+.locked td { background: var(--c-safe-bg); color: var(--c-safe); }
+.lockNow td:last-child { color: var(--c-safe); font-weight: 600; }
+
+.stats { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font-size: .9rem; margin-top: .5rem; }
+.stats b { font-family: var(--mono); }

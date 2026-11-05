@@ -46,9 +46,11 @@ code { background: var(--c-bg); border: 1px solid var(--c-border); border-radius
   border-bottom: 1px solid var(--c-border);
   position: sticky; top: 0; z-index: 10;
 }
+/* 主題多了之後手機上會疊成好幾行，改成單行可橫向捲動 */
 .site-header nav {
   max-width: 1120px; margin: 0 auto; padding: .6rem 1.25rem;
-  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  display: flex; gap: 1rem; align-items: center;
+  overflow-x: auto; white-space: nowrap;
 }
 .site-header .brand { font-weight: 700; text-decoration: none; color: var(--c-text); margin-right: auto; }
 .site-header nav a:not(.brand) { text-decoration: none; color: var(--c-muted); font-size: .95rem; }
@@ -81,6 +83,8 @@ main { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: start; }
 @media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; align-items: start; }
+@media (max-width: 1000px) { .grid-3 { grid-template-columns: 1fr; } }
 
 button {
   font: inherit; cursor: pointer;
@@ -123,6 +127,7 @@ a.topic-card:hover { border-color: var(--c-code); transform: translateY(-2px); }
 .topic-card h3 { margin: .4rem 0 .3rem; }
 .topic-card p { margin: 0; color: var(--c-muted); font-size: .95rem; }
 .topic-card.disabled { opacity: .6; }
+.topic-card .owasp { margin-left: .5rem; font-size: .8rem; color: var(--c-muted); }
 .legend { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .5rem; }
 
 /* =========================================================

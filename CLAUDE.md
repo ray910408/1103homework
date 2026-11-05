@@ -5,6 +5,8 @@
 用互動操作 + 圖像化，讓人幾分鐘內看懂一種攻擊「為什麼會成功、要怎麼修」。
 
 - 第一版主題（5 個）：SQL Injection、XSS、SSRF、CSRF、Command Injection
+- 第二批（OWASP Top 10:2025 其他分類）：IDOR、Path Traversal（A01）、JWT 竄改（A04）、Brute Force（A07）
+- 每個主題在 `topics.ts` 標 OWASP Top 10:2025 分類（`owasp` 欄位），首頁卡片會顯示
 - 部署：GitHub Pages（純靜態網站）
 - 介面語言：繁體中文；技術名詞保留英文，第一次出現時附中文，例如「SQL Injection（SQL 注入）」
 
@@ -33,7 +35,7 @@ src/
   main.tsx / App.tsx     HashRouter、首頁、模組路由
   components/ui.tsx      跨模組共用元件（至少 2 個模組用到才抽出來）
   styles/global.css      色彩語意變數 + 共用元件樣式
-  modules/<topic>/       topic = sqli | xss | ssrf | csrf | cmdi
+  modules/<topic>/       topic = sqli | xss | ssrf | csrf | idor | path | jwt | brute（cmdi 尚未建立）
     index.tsx            模組頁面
     engine.ts            模擬邏輯：純 TS 函式，不依賴 React
     engine.test.ts
@@ -68,6 +70,10 @@ src/
 - **XSS**（Reflected / Stored / DOM-based）：payload 只在 `<iframe sandbox="allow-scripts" srcdoc=...>` 裡執行，**絕不加 `allow-same-origin`**。「偷 cookie」用 `postMessage` 傳回父頁（父頁要驗證 `event.source === iframe.contentWindow`），再畫成動畫。修補版示範 escape、`textContent`、CSP（CSP 寫在 srcdoc 內的 `<meta http-equiv>`）。
 - **SSRF**：網路拓撲圖（攻擊者 → Web Server → 內網：`169.254.169.254` metadata、`localhost` admin 後台、內部 DB）。`serverFetch(url)` 用 `new URL()` 解析，再查記憶體裡的假 DNS / 假服務表。`new URL()` 會把 `2130706433`、`0x7f.1` 正規化成 `127.0.0.1`，正好拿來示範「字串黑名單為什麼擋不住」。修補版：allowlist + 解析後擋 private / loopback / link-local 位址。
 - **CSRF**：同一頁並排兩個假網站 `bank.test` 與 `evil.test`，用假的 cookie jar 視覺化「瀏覽器會自動帶上 cookie」。修補版：CSRF token、`SameSite=Lax`。
+- **IDOR**：假商店 `shop.test`，訂單 / 會員是記憶體裡的表。圖解並排「你是誰」（session）與「你要什麼」（網址裡的編號），看伺服器有沒有比對。修補版：查詢條件加 `owner = session.user`，不是你的就回 404；寫入路徑回 403。
+- **Path Traversal**：假檔案系統 + 自寫 POSIX `join` / `resolve`（不用 Node `path`）。目錄樹 SVG 一步一步畫出 `..` 往上爬。三種模式：直接拼接、只刪一次 `../` 的過濾版、修補版（resolve 後檢查 `startsWith(BASE + '/')`）。
+- **JWT**：Web Crypto（`crypto.subtle` HMAC-SHA256）真的算簽章，密鑰 `demo-secret-key`。三台伺服器：只 decode、相信 header 的 `alg`（接受 `none`）、修補版（固定 `algorithms: ['HS256']` + 驗 `exp`）。畫面只露伺服器簽章前 6 碼，避免直接複製。
+- **Brute Force**：模擬時鐘（engine 不用真的 timer），字典是 18 組最常見密碼。修補版：連續失敗 N 次鎖 M 分鐘；挑戰 2 讓使用者自己調 N / M，同時不能鎖死打錯 2 次的正常使用者。
 - **Command Injection**：假的「ping 工具」。自寫最小 shell tokenizer（`;` `&&` `||` `|` `$()` 反引號、換行）+ 假檔案系統 + 假指令（`ping` `ls` `cat` `whoami` `id`），視覺化一行輸入如何被拆成多個 process。修補版：argv 陣列（`execFile` 的概念）+ 輸入格式驗證。
 
 ## 安全硬規則（不可違反）
@@ -99,3 +105,4 @@ src/
 4. ✅ XSS、SSRF、CSRF（各自 fork 子代理平行開發，主對話整合 + 瀏覽器 QA）
    - ⏸ Command Injection：子代理產生內容時被安全檢查攔下，目前只保留在 topics.ts（`ready: false`），沒有模組資料夾與路由。
 5. ✅ GitHub Pages 部署（CI/CD）
+6. ✅ OWASP 第二批：IDOR、Path Traversal、JWT、Brute Force（同樣 fork 子代理平行開發，主對話整合 + 瀏覽器 QA + 獨立審查）

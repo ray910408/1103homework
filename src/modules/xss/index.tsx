@@ -1,6 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react'
 import {
-  ChallengeCard, FakeSite, Insights, Presets, ResultBox, Section, SegmentLegend, SegmentView, Term, TextField,
+  ChallengeCard, OwaspLine, FakeSite, Insights, Presets, ResultBox, Section, SegmentLegend, SegmentView, Term, TextField,
 } from '../../components/ui.tsx'
 import {
   domTree, features, isAttempt, pageParts, toSegments, victimDoc, willExecute,
@@ -386,6 +386,7 @@ export default function XssPage() {
   return (
     <>
       <h1>XSS（跨站腳本攻擊）</h1>
+      <OwaspLine category="A05 Injection（注入）" cwe="CWE-79" />
       <Section no={1} title="情境：把 JavaScript 藏進網站內容">
         <p>
           <Term tip="Cross-Site Scripting：攻擊者把惡意 JavaScript 塞進網頁內容，讓它在其他使用者的瀏覽器裡執行。">XSS</Term>

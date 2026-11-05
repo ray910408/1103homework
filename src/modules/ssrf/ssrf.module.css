@@ -1,9 +1,5 @@
 /* SSRF 專屬樣式；共用樣式在 src/styles/global.css */
 
-/* 第 3 段：三欄對照 */
-.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; align-items: start; }
-@media (max-width: 1000px) { .grid3 { grid-template-columns: 1fr; } }
-
 /* 拓撲圖 */
 .firewall { fill: var(--c-comment); }
 .zone { fill: none; stroke: var(--c-muted); stroke-width: 1.5; stroke-dasharray: 6 5; }

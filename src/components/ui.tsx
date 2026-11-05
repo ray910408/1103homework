@@ -60,6 +60,17 @@ export function Term({ children, tip }: { children: string; tip: string }) {
   )
 }
 
+/** 模組標題下方的 OWASP 分類列，例如 category="A05 Injection（注入）" cwe="CWE-89" */
+export function OwaspLine({ category, cwe }: { category: string; cwe: string }) {
+  return (
+    <p className="hint">
+      <Term tip="OWASP 是一個開源的網站安全社群；Top 10 是他們整理的「網站最常見的 10 大風險」清單，每幾年更新一次。">OWASP Top 10:2025</Term>
+      ｜{category}｜
+      <Term tip="CWE（Common Weakness Enumeration）：替每一種軟體弱點編號的公開清單，大家講同一種漏洞時用同一個編號。">{cwe}</Term>
+    </p>
+  )
+}
+
 /** 假網站外框（有網址列） */
 export function FakeSite({ url, children }: { url: string; children: ReactNode }) {
   return (

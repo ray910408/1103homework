@@ -2,7 +2,11 @@ import { useEffect } from 'react'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router'
 import { DiagramDefs } from './components/ui.tsx'
 import Home from './Home.tsx'
+import BrutePage from './modules/brute/index.tsx'
 import CsrfPage from './modules/csrf/index.tsx'
+import IdorPage from './modules/idor/index.tsx'
+import JwtPage from './modules/jwt/index.tsx'
+import PathPage from './modules/path/index.tsx'
 import SqliPage from './modules/sqli/index.tsx'
 import SsrfPage from './modules/ssrf/index.tsx'
 import XssPage from './modules/xss/index.tsx'
@@ -34,6 +38,10 @@ export default function App() {
           <Route path="/xss" element={<XssPage />} />
           <Route path="/ssrf" element={<SsrfPage />} />
           <Route path="/csrf" element={<CsrfPage />} />
+          <Route path="/idor" element={<IdorPage />} />
+          <Route path="/path" element={<PathPage />} />
+          <Route path="/jwt" element={<JwtPage />} />
+          <Route path="/brute" element={<BrutePage />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

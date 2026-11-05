@@ -2,7 +2,7 @@ import initSqlJs, { type SqlJsStatic } from 'sql.js'
 import wasmUrl from 'sql.js/dist/sql-wasm-browser.wasm?url'
 import { useEffect, useId, useMemo, useState, type ReactNode } from 'react'
 import {
-  ChallengeCard, FakeSite, Insights, Presets, ResultBox, Section, SegmentLegend, SegmentView, Term, TextField,
+  ChallengeCard, OwaspLine, FakeSite, Insights, Presets, ResultBox, Section, SegmentLegend, SegmentView, Term, TextField,
 } from '../../components/ui.tsx'
 import { analyze, login, SEED, type Analysis, type LoginResult } from './engine.ts'
 import s from './sqli.module.css'
@@ -221,6 +221,7 @@ export default function SqliPage() {
   return (
     <>
       <h1>SQL Injection（SQL 注入）</h1>
+      <OwaspLine category="A05 Injection（注入）" cwe="CWE-89" />
       {err && <ResultBox tone="attack">資料庫引擎載入失敗：{err}</ResultBox>}
 
       <Section no={1} title="情境：一個會「黏字串」的登入頁">

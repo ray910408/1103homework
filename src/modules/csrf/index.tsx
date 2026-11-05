@@ -1,5 +1,5 @@
 import { useId, useMemo, useState, type ReactNode } from 'react'
-import { ChallengeCard, FakeSite, Insights, Presets, ResultBox, Section, Term, TextField } from '../../components/ui.tsx'
+import { ChallengeCard, OwaspLine, FakeSite, Insights, Presets, ResultBox, Section, Term, TextField } from '../../components/ui.tsx'
 import {
   aliceRequest, ATTACKER, attackerHtml, attackRequest, CSRF_TOKEN, SESSION, setCookie, simulate, START_BALANCE, VULNERABLE,
   type Attack, type BankConfig, type RequestKind, type Trace,
@@ -226,6 +226,7 @@ export default function CsrfPage() {
   return (
     <>
       <h1>CSRF（跨站請求偽造）</h1>
+      <OwaspLine category="A01 Broken Access Control（存取控制失效）" cwe="CWE-352" />
 
       <Section no={1} title="情境：Alice 只是打開了一個抽獎網頁">
         <p>
