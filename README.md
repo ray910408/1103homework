@@ -64,17 +64,3 @@ src/
     engine.ts            模擬邏輯（純 TS，不依賴 React）
     engine.test.ts       測試：經典 payload 在漏洞版成功、在修補版失敗
 ```
-
-## 部署
-
-CI/CD 由 GitHub Actions 執行（`.github/workflows/ci-cd.yml`）：
-
-- **CI**：每次 push 到 `main` 或開 PR，都會跑 lint → test → build
-- **CD**：push 到 `main` 且 CI 全部通過，自動部署到 GitHub Pages
-
-repo 的 **Settings → Pages → Build and deployment → Source** 必須設為 **GitHub Actions**。
-
-## 免責聲明
-
-本專案僅供教學用途。所有攻擊都在瀏覽器沙箱內模擬，資料皆為假資料。
-未經授權攻擊他人系統，觸犯《刑法》妨害電腦使用罪（第 358 條起）。
