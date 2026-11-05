@@ -19,7 +19,7 @@
 | Path Traversal（路徑穿越） | A01 Broken Access Control | ✅ 完成 |
 | JWT 竄改 | A04 Cryptographic Failures | ✅ 完成 |
 | Brute Force（暴力破解） | A07 Authentication Failures | ✅ 完成 |
-| Command Injection（命令注入） | A05 Injection | 🚧 製作中 |
+| Command Injection（命令注入） | A05 Injection | ✅ 完成 |
 
 ## 每個主題的 4 段結構
 

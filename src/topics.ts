@@ -25,6 +25,6 @@ export const TOPICS: Topic[] = [
     summary: '把 token 裡的 role 改成 admin；伺服器不驗簽章，你就是管理員。' },
   { id: 'brute', title: 'Brute Force', zh: '暴力破解', owasp: 'A07 Authentication Failures', ready: true,
     summary: '登入沒有次數限制，拿常見密碼清單一個一個試，總會試中。' },
-  { id: 'cmdi', title: 'Command Injection', zh: '命令注入', owasp: 'A05 Injection', ready: false,
+  { id: 'cmdi', title: 'Command Injection', zh: '命令注入', owasp: 'A05 Injection', ready: true,
     summary: '在「輸入 IP」的欄位多打一個分號，就能在伺服器上執行任意指令。' },
 ]

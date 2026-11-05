@@ -3,6 +3,7 @@ import { Link, NavLink, Route, Routes, useLocation } from 'react-router'
 import { DiagramDefs } from './components/ui.tsx'
 import Home from './Home.tsx'
 import BrutePage from './modules/brute/index.tsx'
+import CmdiPage from './modules/cmdi/index.tsx'
 import CsrfPage from './modules/csrf/index.tsx'
 import IdorPage from './modules/idor/index.tsx'
 import JwtPage from './modules/jwt/index.tsx'
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/path" element={<PathPage />} />
           <Route path="/jwt" element={<JwtPage />} />
           <Route path="/brute" element={<BrutePage />} />
+          <Route path="/cmdi" element={<CmdiPage />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

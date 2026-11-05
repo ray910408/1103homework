@@ -35,7 +35,7 @@ src/
   main.tsx / App.tsx     HashRouter、首頁、模組路由
   components/ui.tsx      跨模組共用元件（至少 2 個模組用到才抽出來）
   styles/global.css      色彩語意變數 + 共用元件樣式
-  modules/<topic>/       topic = sqli | xss | ssrf | csrf | idor | path | jwt | brute（cmdi 尚未建立）
+  modules/<topic>/       topic = sqli | xss | ssrf | csrf | idor | path | jwt | brute | cmdi
     index.tsx            模組頁面
     engine.ts            模擬邏輯：純 TS 函式，不依賴 React
     engine.test.ts
@@ -103,6 +103,6 @@ src/
 2. ✅ 首頁 + 共用版型 + 色彩變數
 3. ✅ **SQLi 先做完，當範本模組**：確立 4 段結構後，其他模組照抄結構
 4. ✅ XSS、SSRF、CSRF（各自 fork 子代理平行開發，主對話整合 + 瀏覽器 QA）
-   - ⏸ Command Injection：子代理產生內容時被安全檢查攔下，目前只保留在 topics.ts（`ready: false`），沒有模組資料夾與路由。
 5. ✅ GitHub Pages 部署（CI/CD）
 6. ✅ OWASP 第二批：IDOR、Path Traversal、JWT、Brute Force（同樣 fork 子代理平行開發，主對話整合 + 瀏覽器 QA + 獨立審查）
+7. ✅ Command Injection（主對話直接開發，不用子代理：自寫 shell tokenizer + 假檔案系統；三種模式：直接拼接、黑名單擋 `; & |`、修補版 allowlist + argv）
