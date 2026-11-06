@@ -1,28 +1,28 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
-import { LEVEL_LABEL, TOPICS, type Level } from './topics.ts'
+import { loadProgress, topicStatus } from './progress.ts'
+import { LEVEL_LABEL, TOPICS, type Level, type Topic } from './topics.ts'
 
 const LEVELS: Level[] = [1, 2, 3]
 
-/** 難度標籤：圓點 + 文字，不只靠顏色 */
-function LevelBadge({ level }: { level: Level }) {
-  return (
-    <span className="level-badge">
-      <span aria-hidden="true">{'●'.repeat(level)}{'○'.repeat(3 - level)}</span> 難度{LEVEL_LABEL[level]}
-    </span>
-  )
-}
-
 export default function Home() {
   const [level, setLevel] = useState<Level | 0>(0)
+  const [progress] = useState(loadProgress)
+  const status = (t: Topic) => topicStatus(progress, t.id)
+
+  const ready = TOPICS.filter((t) => t.ready)
+  const cleared = ready.filter((t) => status(t).cleared).length
+  // 下一關：還沒破關的裡面，難度最低的那個
+  const next = [...ready].sort((a, b) => a.level - b.level).find((t) => !status(t).cleared)
   const topics = level ? TOPICS.filter((t) => t.level === level) : TOPICS
 
   return (
     <>
       <div className="hero">
+        <p className="kicker">HACK QUEST · 資安闖關</p>
         <h1>動手玩，看懂資安攻擊</h1>
         <p>
-          每個主題都是一個假網站。你親手輸入攻擊字串，畫面同步畫出「伺服器裡發生了什麼事」，
+          每一關都是一個假網站。你親手輸入攻擊字串，畫面同步畫出「伺服器裡發生了什麼事」，
           再切到修補版，看同一招為什麼失效。全部在瀏覽器裡模擬，放心亂試。
         </p>
         <div className="legend" aria-label="全站顏色說明">
@@ -31,6 +31,21 @@ export default function Home() {
           <span className="badge safe">綠：被擋下 / 修補後</span>
           <span className="badge leak">黃：外洩的資料</span>
         </div>
+      </div>
+
+      <div className="card quest-progress">
+        <div className="quest-progress-head">
+          <strong>破關進度</strong>
+          <span className="quest-count">{cleared} / {ready.length} 關</span>
+        </div>
+        <div className="quest-bar" role="progressbar" aria-label="破關進度"
+          aria-valuemin={0} aria-valuemax={ready.length} aria-valuenow={cleared}>
+          <div style={{ width: `${(cleared / ready.length) * 100}%` }} />
+        </div>
+        {next
+          ? <Link to={`/${next.id}`} className="button primary">{cleared ? '繼續下一關' : '從第一關開始'}：{next.title} →</Link>
+          : <p className="quest-done">🏆 全部破關！你已經看懂 {ready.length} 種攻擊了。</p>}
+        <p className="hint">完成一關裡的所有「挑戰」就算破關；進度只存在這台電腦的瀏覽器裡。</p>
       </div>
 
       <div className="level-filter" role="group" aria-label="依難度篩選">
@@ -45,13 +60,22 @@ export default function Home() {
 
       <div className="topic-grid">
         {topics.map((t) => {
+          const s = status(t)
           const body = (
             <>
-              <span className={`badge ${t.ready ? 'code' : ''}`}>{t.ready ? '可以玩了' : '製作中'}</span>
-              <LevelBadge level={t.level} />
-              <span className="owasp">OWASP {t.owasp}</span>
+              <div className="topic-meta">
+                <span className="lv">LV.{t.level}</span>
+                <span className="level-name">難度{LEVEL_LABEL[t.level]}</span>
+                <span>OWASP {t.owasp}</span>
+              </div>
               <h3>{t.title}</h3>
               <p><strong>{t.zh}</strong>｜{t.summary}</p>
+              <span className="quest-status">
+                {!t.ready ? '製作中'
+                  : s.cleared ? <span className="badge safe">✓ 已破關</span>
+                  : s.done ? <span className="badge accent">挑戰 {s.done} / {s.total}</span>
+                  : '▶ 開始挑戰'}
+              </span>
             </>
           )
           return t.ready

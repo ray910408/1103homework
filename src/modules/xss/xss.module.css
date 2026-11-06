@@ -1,9 +1,6 @@
 /* XSS 專屬樣式；共用樣式在 src/styles/global.css */
 
 .tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
-.tabs button[aria-pressed="true"], .viewers button[aria-pressed="true"] {
-  background: var(--c-code); border-color: var(--c-code); color: var(--c-on-accent);
-}
 
 /* 輸入框 + 送出按鈕同一列 */
 .row { display: grid; grid-template-columns: 1fr auto; gap: .5rem; align-items: end; }

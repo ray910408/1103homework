@@ -7,6 +7,7 @@
 - 第一版主題（5 個）：SQL Injection、XSS、SSRF、CSRF、Command Injection
 - 第二批（OWASP Top 10:2025 其他分類）：IDOR、Path Traversal（A01）、JWT 竄改（A04）、Brute Force（A07）
 - 每個主題在 `topics.ts` 標 OWASP Top 10:2025 分類（`owasp` 欄位）與難度（`level`：1 低 / 2 中 / 3 高），首頁卡片會顯示，並可依難度篩選
+- 視覺風格：闖關遊戲（neo-brutalism）——粗框 + 硬陰影、LV 難度徽章、首頁破關進度條（`src/progress.ts`，存 localStorage；完成一關的所有 `ChallengeCard` 才算破關）
 - 右上角顯示設定：字體大小（A− / A+，改 `html` 的 font-size）、亮暗模式（`data-theme`，存 localStorage）
 - 部署：GitHub Pages（純靜態網站）
 - 介面語言：繁體中文；技術名詞保留英文，第一次出現時附中文，例如「SQL Injection（SQL 注入）」
@@ -55,6 +56,8 @@ src/
 | `--c-code` | 伺服器端程式碼、系統結構（藍） |
 | `--c-safe` | 修補後、被擋下（綠） |
 | `--c-leak` | 外洩的資料（黃） |
+
+介面用色（不是語意，不要拿來表示攻擊 / 修補）：`--c-accent`（紫）= 按鈕、目前頁面、選取中、進度條；`--c-ink` = 粗框與硬陰影（`--shadow`）。
 
 顏色不能是唯一的訊號：同時加 icon 或文字標籤。
 

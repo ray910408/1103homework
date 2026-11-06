@@ -1,4 +1,6 @@
-import { useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useLocation } from 'react-router'
+import { recordChallenge } from '../progress.ts'
 
 // ---------- 型別 ----------
 
@@ -157,7 +159,7 @@ export function SegmentLegend({ code = '程式設計師寫的程式', injected =
 
 /**
  * 挑戰卡：hints 最後一項是解答。children 放這個挑戰自己的互動區。
- * solved 由呼叫端根據模擬結果判斷。
+ * solved 由呼叫端根據模擬結果判斷；完成時記到破關進度（主題 id 取自網址）。
  */
 export function ChallengeCard({ title, goal, solved, hints, why, children }: {
   title: string
@@ -168,6 +170,8 @@ export function ChallengeCard({ title, goal, solved, hints, why, children }: {
   children: ReactNode
 }) {
   const [shown, setShown] = useState(0)
+  const topic = useLocation().pathname.slice(1)
+  useEffect(() => { recordChallenge(topic, title, solved) }, [topic, title, solved])
   return (
     <div className={`card challenge ${solved ? 'solved' : ''}`}>
       <h3>{solved && '✅ '}{title}</h3>
