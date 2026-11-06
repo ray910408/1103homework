@@ -6,7 +6,8 @@
 
 - 第一版主題（5 個）：SQL Injection、XSS、SSRF、CSRF、Command Injection
 - 第二批（OWASP Top 10:2025 其他分類）：IDOR、Path Traversal（A01）、JWT 竄改（A04）、Brute Force（A07）
-- 每個主題在 `topics.ts` 標 OWASP Top 10:2025 分類（`owasp` 欄位），首頁卡片會顯示
+- 每個主題在 `topics.ts` 標 OWASP Top 10:2025 分類（`owasp` 欄位）與難度（`level`：1 低 / 2 中 / 3 高），首頁卡片會顯示，並可依難度篩選
+- 右上角顯示設定：字體大小（A− / A+，改 `html` 的 font-size）、亮暗模式（`data-theme`，存 localStorage）
 - 部署：GitHub Pages（純靜態網站）
 - 介面語言：繁體中文；技術名詞保留英文，第一次出現時附中文，例如「SQL Injection（SQL 注入）」
 
@@ -56,6 +57,8 @@ src/
 | `--c-leak` | 外洩的資料（黃） |
 
 顏色不能是唯一的訊號：同時加 icon 或文字標籤。
+
+深色模式：global.css 的變數用 `light-dark(淺色值, 深色值)`，新增顏色也要給兩個值；實心彩色底上的文字用 `--c-on-accent`，不要寫死 `#fff`。
 
 ### 共用元件（`src/components/ui.tsx`，新模組先用這些，不要自己再做一份）
 - 版面：`Section`、`Term`（名詞解釋）、`FakeSite`（有網址列的假網站外框）

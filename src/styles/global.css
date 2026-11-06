@@ -1,20 +1,23 @@
-/* 色彩語意：所有模組共用，不可各自定義（見 CLAUDE.md） */
+/* 色彩語意：所有模組共用，不可各自定義（見 CLAUDE.md）
+   light-dark(淺色值, 深色值)：跟著 color-scheme 切換；data-theme 由右上角按鈕設定 */
 :root {
-  --c-attack: #c5221f;      /* 使用者 / 攻擊者輸入 */
-  --c-attack-bg: #fce8e6;
-  --c-code: #1a5fd0;        /* 伺服器端程式碼、系統結構 */
-  --c-code-bg: #e8f0fe;
-  --c-safe: #137333;        /* 修補後、被擋下 */
-  --c-safe-bg: #e6f4ea;
-  --c-leak: #8a5300;        /* 外洩的資料 */
-  --c-leak-bg: #fef3d0;
+  color-scheme: light dark;
+  --c-attack: light-dark(#c5221f, #ff7b72);      /* 使用者 / 攻擊者輸入 */
+  --c-attack-bg: light-dark(#fce8e6, #3b1a1a);
+  --c-code: light-dark(#1a5fd0, #6cb6ff);        /* 伺服器端程式碼、系統結構 */
+  --c-code-bg: light-dark(#e8f0fe, #13284a);
+  --c-safe: light-dark(#137333, #56d364);        /* 修補後、被擋下 */
+  --c-safe-bg: light-dark(#e6f4ea, #12301c);
+  --c-leak: light-dark(#8a5300, #e3b341);        /* 外洩的資料 */
+  --c-leak-bg: light-dark(#fef3d0, #3a2c0b);
 
-  --c-text: #1f2328;
-  --c-muted: #59636e;
-  --c-border: #d0d7de;
-  --c-bg: #f6f8fa;
-  --c-card: #ffffff;
-  --c-comment: #8c959f;
+  --c-text: light-dark(#1f2328, #e6edf3);
+  --c-muted: light-dark(#59636e, #9ba6b2);
+  --c-border: light-dark(#d0d7de, #3d444d);
+  --c-bg: light-dark(#f6f8fa, #0d1117);
+  --c-card: light-dark(#ffffff, #161b22);
+  --c-on-accent: light-dark(#fff, #0d1117); /* 實心彩色底上的文字 */
+  --c-comment: light-dark(#8c959f, #7d8590);
 
   --radius: 10px;
   --font: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
@@ -25,6 +28,9 @@
   font-family: var(--font);
   line-height: 1.7;
 }
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
 
 * { box-sizing: border-box; }
 body { margin: 0; }
@@ -47,11 +53,19 @@ code { background: var(--c-bg); border: 1px solid var(--c-border); border-radius
   position: sticky; top: 0; z-index: 10;
 }
 /* 主題多了之後手機上會疊成好幾行，改成單行可橫向捲動 */
-.site-header nav {
+.header-inner {
   max-width: 1120px; margin: 0 auto; padding: .6rem 1.25rem;
+  display: flex; gap: 1rem; align-items: center;
+}
+.site-header nav {
+  flex: 1; min-width: 0;
   display: flex; gap: 1rem; align-items: center;
   overflow-x: auto; white-space: nowrap;
 }
+/* 字體大小 + 亮暗模式：固定在右側，不跟著選單捲動 */
+.prefs { flex: none; display: flex; gap: .3rem; }
+.prefs button { padding: .2rem .55rem; font-size: .85rem; white-space: nowrap; }
+.prefs button:disabled { opacity: .4; cursor: default; }
 .site-header .brand { font-weight: 700; text-decoration: none; color: var(--c-text); margin-right: auto; }
 .site-header nav a:not(.brand) { text-decoration: none; color: var(--c-muted); font-size: .95rem; }
 .site-header nav a.active { color: var(--c-code); font-weight: 600; }
@@ -77,7 +91,7 @@ main { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
 .section-no {
   flex: none; width: 2rem; height: 2rem; border-radius: 50%;
   display: grid; place-items: center;
-  background: var(--c-code); color: #fff; font-weight: 700;
+  background: var(--c-code); color: var(--c-on-accent); font-weight: 700;
 }
 .section-lead { color: var(--c-muted); margin-top: 0; }
 
@@ -92,7 +106,7 @@ button {
   border-radius: 8px; padding: .35rem .8rem;
 }
 button:hover { border-color: var(--c-code); }
-button.primary { background: var(--c-code); border-color: var(--c-code); color: #fff; }
+button.primary { background: var(--c-code); border-color: var(--c-code); color: var(--c-on-accent); }
 
 label { display: block; font-size: .9rem; color: var(--c-muted); margin: .6rem 0 .2rem; }
 input[type="text"] {
@@ -106,7 +120,7 @@ input[type="text"]:focus { border-color: var(--c-code); }
 .term .tip {
   display: none; position: absolute; left: 0; top: 1.8em; z-index: 5;
   width: max-content; max-width: min(18rem, calc(100vw - 16px));
-  background: var(--c-text); color: #fff; font-size: .85rem; line-height: 1.5;
+  background: var(--c-text); color: var(--c-card); font-size: .85rem; line-height: 1.5;
   padding: .45rem .6rem; border-radius: 6px; font-weight: 400;
 }
 .term:hover .tip, .term:focus .tip { display: block; }
@@ -121,13 +135,19 @@ input[type="text"]:focus { border-color: var(--c-code); }
 .hero { padding: 1.5rem 0 .5rem; }
 .hero h1 { font-size: 2rem; margin: 0 0 .5rem; }
 .hero p { color: var(--c-muted); max-width: 42rem; margin: 0; }
-.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem; }
 .topic-card { display: block; text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; }
 a.topic-card:hover { border-color: var(--c-code); transform: translateY(-2px); }
 .topic-card h3 { margin: .4rem 0 .3rem; }
 .topic-card p { margin: 0; color: var(--c-muted); font-size: .95rem; }
 .topic-card.disabled { opacity: .6; }
 .topic-card .owasp { margin-left: .5rem; font-size: .8rem; color: var(--c-muted); }
+/* 難度：圓點 + 文字，用中性色（紅藍綠黃已保留給色彩語意） */
+.topic-card .level-badge { margin-left: .5rem; font-size: .8rem; font-weight: 600; color: var(--c-text); }
+.topic-card .level-badge span { letter-spacing: .05em; color: var(--c-muted); }
+.level-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-top: 1.5rem; }
+.level-filter button[aria-pressed="true"] { background: var(--c-code); border-color: var(--c-code); color: var(--c-on-accent); }
+.level-filter .hint { margin: 0 0 0 .4rem; }
 .legend { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .5rem; }
 
 /* =========================================================
@@ -176,7 +196,7 @@ a.topic-card:hover { border-color: var(--c-code); transform: translateY(-2px); }
 }
 .seg-code { color: var(--c-code); }
 .seg-data { color: var(--c-attack); outline: 1.5px dashed var(--c-attack); outline-offset: 1px; border-radius: 3px; }
-.seg-injected { color: #fff; background: var(--c-attack); font-weight: 700; border-radius: 3px; padding: 0 1px; }
+.seg-injected { color: var(--c-on-accent); background: var(--c-attack); font-weight: 700; border-radius: 3px; padding: 0 1px; }
 .seg-comment { color: var(--c-comment); text-decoration: line-through; }
 .seg-legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .85rem; color: var(--c-muted); margin: .5rem 0 0; padding: 0; list-style: none; }
 .seg-legend span { font-family: var(--mono); padding: 0 .3rem; }

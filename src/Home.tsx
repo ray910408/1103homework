@@ -1,7 +1,22 @@
+import { useState } from 'react'
 import { Link } from 'react-router'
-import { TOPICS } from './topics.ts'
+import { LEVEL_LABEL, TOPICS, type Level } from './topics.ts'
+
+const LEVELS: Level[] = [1, 2, 3]
+
+/** 難度標籤：圓點 + 文字，不只靠顏色 */
+function LevelBadge({ level }: { level: Level }) {
+  return (
+    <span className="level-badge">
+      <span aria-hidden="true">{'●'.repeat(level)}{'○'.repeat(3 - level)}</span> 難度{LEVEL_LABEL[level]}
+    </span>
+  )
+}
 
 export default function Home() {
+  const [level, setLevel] = useState<Level | 0>(0)
+  const topics = level ? TOPICS.filter((t) => t.level === level) : TOPICS
+
   return (
     <>
       <div className="hero">
@@ -18,11 +33,22 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="level-filter" role="group" aria-label="依難度篩選">
+        <span>難度：</span>
+        {([0, ...LEVELS] as const).map((l) => (
+          <button key={l} type="button" aria-pressed={level === l} onClick={() => setLevel(l)}>
+            {l ? LEVEL_LABEL[l] : '全部'}
+          </button>
+        ))}
+        <span className="hint">新手建議從「低」開始</span>
+      </div>
+
       <div className="topic-grid">
-        {TOPICS.map((t) => {
+        {topics.map((t) => {
           const body = (
             <>
               <span className={`badge ${t.ready ? 'code' : ''}`}>{t.ready ? '可以玩了' : '製作中'}</span>
+              <LevelBadge level={t.level} />
               <span className="owasp">OWASP {t.owasp}</span>
               <h3>{t.title}</h3>
               <p><strong>{t.zh}</strong>｜{t.summary}</p>

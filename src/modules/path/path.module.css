@@ -6,7 +6,7 @@
 .zone { fill: none; stroke: var(--c-safe); stroke-width: 1.5; stroke-dasharray: 6 5; }
 .zoneLabel { font-size: 13px; font-weight: 700; fill: var(--c-safe); }
 .hopDot { fill: var(--c-text); }
-.hopNo { font-size: 11px; font-weight: 700; fill: #fff; }
+.hopNo { font-size: 11px; font-weight: 700; fill: var(--c-on-accent); }
 .status { font-size: 13px; fill: var(--c-text); font-family: var(--mono); }
 .statusBad { font-size: 14px; font-weight: 700; fill: var(--c-attack); }
 .statusOk { font-size: 14px; font-weight: 700; fill: var(--c-safe); }

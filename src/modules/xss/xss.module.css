@@ -2,7 +2,7 @@
 
 .tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
 .tabs button[aria-pressed="true"], .viewers button[aria-pressed="true"] {
-  background: var(--c-code); border-color: var(--c-code); color: #fff;
+  background: var(--c-code); border-color: var(--c-code); color: var(--c-on-accent);
 }
 
 /* 輸入框 + 送出按鈕同一列 */
@@ -28,7 +28,7 @@
 .tree { padding-left: 0; }
 .tree ul { padding-left: 1.1rem; border-left: 1px dashed var(--c-border); }
 .node { color: var(--c-code); padding: 0 .25rem; border-radius: 4px; overflow-wrap: anywhere; }
-.node.injected { background: var(--c-attack); color: #fff; font-weight: 700; }
+.node.injected { background: var(--c-attack); color: var(--c-on-accent); font-weight: 700; }
 .handler { text-decoration: underline wavy; text-underline-offset: 3px; }
 .text { color: var(--c-muted); overflow-wrap: anywhere; }
 .text.injected { color: var(--c-attack); outline: 1.5px dashed var(--c-attack); outline-offset: 1px; border-radius: 3px; }

@@ -2,7 +2,7 @@
 
 /* 選擇要攻擊哪台伺服器 */
 .modes { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-bottom: 1rem; font-size: .9rem; }
-.modes button[aria-pressed="true"] { background: var(--c-code); border-color: var(--c-code); color: #fff; }
+.modes button[aria-pressed="true"] { background: var(--c-code); border-color: var(--c-code); color: var(--c-on-accent); }
 
 /* JWT 編輯器 */
 .area {

@@ -6,7 +6,7 @@
 .zoneLabel { font-size: 13px; font-weight: 700; fill: var(--c-muted); }
 .blockX { font-size: 22px; font-weight: 700; fill: var(--c-safe); }
 .hopDot { fill: var(--c-text); }
-.hopNo { font-size: 12px; font-weight: 700; fill: #fff; }
+.hopNo { font-size: 12px; font-weight: 700; fill: var(--c-on-accent); }
 .note { font-size: 13px; font-weight: 600; fill: var(--c-text); }
 
 /* 伺服器內部：請求追蹤 */
